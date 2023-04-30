@@ -62,6 +62,6 @@ while (nombreUsuario == "admin" && contraseña == "password"){
         true
     }
     else{
-        break
+        break;
     }
 }
