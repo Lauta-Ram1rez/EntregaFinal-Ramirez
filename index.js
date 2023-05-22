@@ -1,67 +1,82 @@
-
-function mPago(precio){
-    let tPago = parseInt(prompt(`Ingrese el metodo de pago
-[1]  efectivo
-[2] credito 20% o 30% de incremento`))
-    if(tPago === 1){
-        alert (`El precio en efectivo es de ${precio}`)
-    }
-    else if (tPago === 2){
-        let cuotas = parseInt(prompt(
-`En cuantas cotas deseas pagar
-20% de 1 a 6 cuotas
-30% de 7 a 12 cuotas`))
-        if(cuotas > 0 && cuotas < 7){
-            let interes20 = precio * 1.2
-            alert(`El precio en ${cuotas} cuotas es de ${interes20}`)
-        }
-        else if(cuotas > 6 && cuotas < 13){
-            let interes30 = precio * 1.3
-            alert(`El precio en ${cuotas} cuotas es de ${interes30}`)
-        }
-        else{
-            alert(`El numero no es correcto`)
-        }
-    }
-    else{
-        alert(`El numero no es correcto`)
-    }
-}
-let nombreUsuario = prompt(`Ingrese nombre de usuario [admin]`);
-let contraseña =prompt(`Ingrese contraseña [password]`.toLowerCase());
-while (nombreUsuario == "admin" && contraseña == "password"){
-    alert(`Bienvenido a la tienda de prosesadores`)
-    let tipoProsesador = parseInt(prompt(`
-    Ingrese la opcion que desea comprar
-    [1] intel i3 100usd
-    [2] intel i5 200usd
-    [3] intel i7 300usd   
-    [4] intel i9 400usd
+//------------------------------- Productos a comprar en un array ---------------------------------------------------
+const productos = [
+    {marca:"intel"  , modelo:"core i3"  , precio:100000},
+    {marca:"intel"  , modelo:"core i5"  , precio:150000},
+    {marca:"intel"  , modelo:"core i7"  , precio:200000},
+    {marca:"amd"    , modelo:"ryzen 3"  , precio:100000},
+    {marca:"amd"    , modelo:"ryzen 5"  , precio:150000},
+    {marca:"amd"    , modelo:"ryzen 7"  , precio:200000},
+    {marca:"nvidia" , modelo:"rtx 3060" , precio:100000},
+    {marca:"nvidia" , modelo:"rtx 3070" , precio:150000},
+    {marca:"nvidia" , modelo:"rtx 3080" , precio:200000}
+    ]
+    const carrito = []
+    let comprar = parseInt(prompt(`
+    Marque [1] si desea ingresar a la tienda
+    Marque [2] si desea salir de la tienda
     `))
-    switch(tipoProsesador){
-        case 1 :
-            mPago(100)
-            break;
-        case 2 :
-            mPago(200)
-            break;
-        case 3 :
-            mPago(300)
-            break;
-        case 4 :
-            mPago(400)
-            break;
-        default :
-            alert(`El numero ingresado no es correcto`)   
-            break;     
+    if(comprar === 1){
+        let todosLosProductos =  productos.map((producto)  => `MODELO:${producto.modelo} PRECIO: ${producto.precio}
+        `)
+        alert(todosLosProductos.join(" - "))
+    }else{
+        alert(`Gracias x su visita`)
     }
-    let salida = parseInt(prompt(`   
-    1 - Volver a comprar
-    2 - Salir`))
-    if(salida === 1){
-        true
+    //------------------------------- Seleccionar Producto ---------------------------------------------------
+    while(comprar != 2){
+        let item = prompt(`Agregar producto al carrito`)
+        let precio = 0
+        if(item =="core i3" || item =="core i5" || item =="core i7" || item =="ryzen 3" || item =="ryzen 5" || item  =="ryzen 7" || item == "rtx 3060" || item == "rtx 3070" || item == "rtx 3080"){
+            switch(item){
+                case "core i3":
+                    precio=100000 ;
+                break;
+                case "core i5":
+                    precio=150000 ;
+                break;
+                case "core i7":
+                    precio=200000 ;
+                break;
+                case "ryzen 3":
+                    precio=100000 ;
+                break;
+                case "ryzen 5":
+                    precio=150000 ;
+                break;
+                case "ryzen 7":
+                    precio=200000 ;
+                break;
+                case "rtx 3060":
+                    precio=100000 ;
+                break;
+                case "rtx 3070":
+                    precio=150000 ;
+                break;
+                case "rtx 3080":
+                    precio=200000 ;
+                break;
+                default:
+                    break;
+            }
+    //------------------------------- Cantidad de un mismo producto ---------------------------------------------------
+        let cantidad = parseInt(prompt(`Cuantos deseas comprar`))
+        carrito.push({item,cantidad,precio})
+        console.log(carrito)
+        }else{
+            alert(`Producto no encontrado`)
+        }
+        comprar = prompt(`Desea seguir comprando si o no`)
+    //------------------------------- Suma de la cantidad de productos ---------------------------------------------------
+        while(comprar == "no"){
+            alert(`Gracias por la compra`)
+            carrito.map((itemFinal) =>{
+                alert(
+                `
+                Producto:${itemFinal.item} 
+                Cantidad: ${itemFinal.cantidad} 
+                Precio :${itemFinal.precio * itemFinal.cantidad}
+                `)
+            })
+            break;
+        }
     }
-    else{
-        break;
-    }
-}
